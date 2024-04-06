@@ -1,0 +1,297 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+
+\title{\textbf{《应用随机过程》第三次作业}} 
+\author{24 2022010910017 谢卿云}
+\date{\today}
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+\newcounter{lemmaname}
+\newenvironment{problem}{\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{题目\arabic{problemname}. }}{\end{shaded}\par}
+\newenvironment{lemma}{\stepcounter{lemmamname}\par\noindent\textbf{引理\arabic{problemname}. }}{\par}
+\newenvironment{solution}{\par\noindent\textbf{解答. }}{\par}
+\newenvironment{note}{\par\noindent\textbf{题目\arabic{problemname}的注记. }}{\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		（泊松过程的数字特征）设 $\{N(t), t \geq 0\}$ 是强度为 $\lambda$ 的泊松过程。求: $N(t)$ 的均值函数、方差函数、协方差函数、和自相关函数。
+	\end{problem}
+	
+	\begin{solution}
+		回忆Poisson过程的定义,$N(t)\sim P(\lambda t)$.不妨假设$s\le t$.
+		$$\begin{aligned}
+			&\mu_N(t)=E[N(t)]=\lambda t\\
+			&D_N(t)=D[N(t)]=\lambda t\\
+		\end{aligned}$$
+		$$\begin{aligned}
+			&R_N(s,t)=E[N(s)N(t)]=E[N(s)(N(s)+N(t)-N(s))]\\
+			&=E[N^2(s)]+E[N(s)]E[N(t)-N((s))]\\
+			&=\lambda s+\lambda^2 s^2+ \lambda s(\lambda(t-s))\\
+			&=\lambda \min\{s,t\}+\lambda^2st\\
+			&\gamma_N(s,t)=R_N(s,t)-E[N(s)]E[N(t)]\\
+			&=\lambda \min\{s,t\}+\lambda^2st-\lambda^2st=\lambda \min\{s,t\}
+		\end{aligned}$$
+	\end{solution}
+	
+%	\begin{note}
+%		这里是注记. 
+%	\end{note}
+	
+	\begin{problem}
+		设某电话总机在 $t$ 分钟内接到的电话呼叫数 $\{N(t), t \geq 0\}$ 是具有速率为 $\lambda$ 的Poisson过程,求:\\
+		(a) 3 分钟内接到 5 次呼叫的概率 $p_{1}$.\\
+		(b) 已知 3 分钟内接到 5 次呼叫，问第 5 次呼叫在第 2 到第 3 分钟之间到来的概率 $p_{2}$.
+	\end{problem}
+	
+	\begin{solution}
+		\\ (a)注意到$N(t)\sim P(\lambda t)$.由Poisson分布律\\
+		$$p_1=P(\{N(3)=5\})=\frac{(3\lambda)^5}{5!}e^{-3\lambda}$$
+		\\ (b)
+		记$T_n$为电话呼叫事件第$n$次发生的时刻.\\
+		$$\begin{aligned}
+			&p_2=1-P({N(2)=5|N(3)=5})\\
+			&=1-\frac{P({N(2)=5})P({N(3)-N(2)=0})}{P(N(3)=5)}\\
+			&=1-\frac{\frac{(2\lambda)^5}{5!}e^{-2\lambda} \lambda^0 e^{-\lambda}}{\frac{(3\lambda)^5}{5!}e^{-3\lambda} }\\
+			&=1-(\frac 2 3)^5
+		\end{aligned}$$
+		
+%		$$p_2=P({2\le T_5<3|N(3)=5})   =P({N(2)<5}|N(3)=5)
+%		   =P(\bigcup_{k=0}^{4}\{N(2)=k|N(3)=5\})   =\sum_{k=0}^4 \frac{2\lambda}{k!}e^{-2\lambda}$$
+%		$$p_2=1-P({N(2)=5|N(3)=5})=1-\frac{P({N(2)=5})P({N(3)-N(2)=0})}{P(N(3)=5)}$$
+%		$$=1-\frac{\frac{(2\lambda)^5}{5!}e^{-2\lambda} \lambda^0 e^{-\lambda}}{\frac{(3\lambda)^5}{5!}e^{-3\lambda} }=1-(\frac 2 3)^5$$		
+	\end{solution}
+	
+	\begin{problem}
+		设 $\{N(t), t \geq 0\}$ 是参数为 $\lambda$ 的Poisson过程, 求:\\
+		(a) $s>0$ 时, $E[N(s) N(t+s)]$;\\
+		(b) $0<s<t$ 时, $P(N(s)=k \mid N(t)=n)$;\\
+		(c) $s>0$ 时, $P(N(t+s)=j \mid N(s)=j)$.\\
+	\end{problem}
+	
+	\begin{solution}
+		\\ (a)由泊松过程的独立增量性质.
+		$$\begin{aligned}
+				&E[N(s)N(t+s)]=E[N(s)(N(t+s)-N(s)+N(s))]\\
+						&=E[N^2(s)]+E[N(s)]E[N(t+s)-N(s)]\\
+			 			&=E^2[N(s)]+D(N(s))+E[N(s)]E[N(t+s)-N(s)]\\
+						&=\lambda^2s^2+\lambda s+\lambda^2 st\\
+		\end{aligned}$$
+		(b)假设$k\le n$.(否则为平凡情况，概率为0).利用泊松过程的独立增量性质.
+		$$\begin{aligned}
+			&P(N(s)=k \mid N(t)=n)\\
+			&=\frac{P({N(s)=k,N(t)=n})}{P({N(t)=n})}\\
+			&=\frac{\frac{(\lambda s)^k}{k!}e^{-\lambda s}  \frac{(\lambda (t-s))^{n-k}}{(n-k)!}e^{-\lambda (t-s)}}{\frac{(\lambda t)^n}{n!}e^{-\lambda t}}\\
+			&=\binom{n}{k}\left(\frac s t\right)^k\left(\frac{t-s}t\right)^{n-k}\\
+		\end{aligned}$$
+		\\ (c) 由泊松过程的独立增量性质，
+		$$\begin{aligned}
+			&P(N(t+s)=j \mid N(s)=j)\\
+		&=P({N(t+s)-N(s)=0\mid N(s)=j})\\
+		&=P({N(t+s)-N(s)=0})=e^{-\lambda t}\\	
+		\end{aligned}$$
+		
+	\end{solution}
+	\begin{note}
+		我们在(b)中实际证明引理1:已知$s<t,k\le n,N(t)=n$,则$N(s)\sim B(n,\frac s t)$ 
+	\end{note}
+	
+	\begin{problem}
+		设 $\left\{N_{1}(t), t \geq 0\right\}$ 和 $\left\{N_{2}(t), t \geq 0\right\}$ 分别是参数为 $\lambda_{1}$ 和 $\lambda_{2}$ 的泊松过程, 且这两个过程相互独立。对 $0 \leq k \leq n$, 证明下列成立:\\
+		(a) $P\left(N_{1}(t)=k \mid N_{1}(t)+N_{2}(t)=n\right)=C_{n}^{k}\left(\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}\right)^{k}\left(\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}\right)^{n-k}$;\\		
+		(b) $E\left[N_{1}(t) \mid N_{1}(t)+N_{2}(t)=n\right]=\frac{n \lambda_{1}}{\lambda_{1}+\lambda_{2}}$;
+		
+	\end{problem}
+	
+	\begin{solution}
+		\\ (a)不难根据全概率公式得出
+		$$\begin{aligned}
+			&P\left(\{ N_{1}(t)=k \mid N_{1}(t)+N_{2}(t)=n\right)=k \mid N(t)=n\})\\
+			&=\frac{P({N_{1}(t)=k,N_{2}(t)=n-k})}{P({N_{1}(t)+N_{2}(t)=n})}\\
+			&=\frac{P({N_1(t)=k})P({N(2)=n-k})}{\sum_{k=0}^{n}P({N_1(t)=k})P({N(2)=n-k})}\\
+			&=\frac{ \frac{{\lambda_1 t}^{k}}{k!}e^{-\lambda_1 t} \frac{{\lambda_2 t}^{n-k}}{(n-k)!}e^{-\lambda_2 t} }{\sum_{k=0}^{n} \frac{{\lambda_1 t}^{k}}{k!}e^{-\lambda_1 t} \frac{{\lambda_2 t}^{n-k}}{(n-k)!}e^{-\lambda_2 t} }\\
+			&=\binom n k \left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^k\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^{n-k}\\
+		\end{aligned}$$
+		\\ (b)
+			$$\begin{aligned}
+			&E\left[N_{1}(t) \mid N_{1}(t)+N_{2}(t)\right]\\
+			&=\sum_{k=0}^n kP\left(N_{1}(t)=k \mid N_{1}(t)+N_{2}(t)=n\right)\\
+			&=\sum_{k=0}^n k \binom n k \left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^k\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^{n-k}\\
+			&=\frac{n\lambda_1}{\lambda_1+\lambda_2}\sum_{k=0}^n  \binom{n-1}{k-1}  \left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^{k-1}\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^{n-k}\\
+			&=\frac{n\lambda_1}{\lambda_1+\lambda_2}\left(\frac{\lambda_1}{\lambda_1+\lambda_2} + \frac{\lambda_1}{\lambda_1+\lambda_2} \right)^{n-1}\\
+			&=\frac{n\lambda_1}{\lambda_1+\lambda_2}\\
+		\end{aligned}$$
+		
+		
+		
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		假设 $[0, t]$ 内顾客到达商场的人数 $\{N(t), t \geq 0\}$ 是强度为 $\lambda$ 的Poisson过程, 且每一个到达商场的顾客是男性还是女性的概率分别为 $p$ 和 $q, p+q=1$. 设 $N_{1}(t)$ 和 $N_{2}(t)$ 分别为 $[0, t]$ 内到达商场的男女顾客数。求 $N_{1}(t)$ 和 $N_{2}(t)$ 的分布, 并证明它们相互独立.
+	\end{problem}
+	
+	\begin{solution}
+	断言：\\
+	$$N_1(t)\sim P(p\lambda),N(2)\sim P(q\lambda),N_1(t),N_2(t)\text{相互独立}$$
+	为此只需证明以下Poisson过程分流引理：
+	设$\{N(t)|t\geq 0\} \sim P(\lambda)$,$\{Y_j\}_{j\geq 0}\sim B(1,p)$,相互独立且与$N(t)$独立，令\\
+	$$N_1(t)=\sum_{k=0}^{N(t)}Y_j,N_1(t)=\sum_{k=0}^{N(t)}(1-Y_j)$$则$N_1(t)\sim P(\lambda p),N(2)\sim P(\lambda(1-p)),N_1(t),N_2(t)\text{相互独立}$\\
+	对于$0\le s <t$,$$M(t)=\sum_{j=1}^{N(t)}Y_j,t\ge 0$$
+	是$(s,t]$内事件的到达数，仿照引理1，我们可知已知$N(s)=l,N(t)=k$的条件下$M(t)-M(s)\sim B(k-l,p)$，也即$E[I_{M(t)-M(s)=n}|N(s),N(t)]=g(N(t)-N(s),n)$
+	两边取期望得$P({M(t)-M(s)=n})=E[g(N(t)-N(s),n)]$,由${N(t)}$的平稳性可知$M(t)$为平稳增量过程.\\
+	再来证明独立增量性，对正整数$m$和$0=t_0\le t_1<...< t_m$和整数$0=n_0\le n_1\le n_2 \le ...\le n_m$,定义$$\mathbf{N}=(N(t_1),...,N(t_m)),\mathbf{n}=(n_1,...,n_m)$$
+	注意到独立性：\\
+	$$\begin{aligned}
+		&P(M(t_j)-M(t_{j-1})=k_j, 1\leq j\leq m\mid\boldsymbol{N}=\boldsymbol{n}) \\
+		=& P\left(\sum_{i=n_{j-1}}^{n_j}Y_i=k_j, 1\leq j\leq m\mid\boldsymbol{N}=\boldsymbol{n}\right) \\
+		=& P\left(\sum_{i=n_{j-1}}^{n_{j}}Y_{i}=k_{j},~1\leq j\leq m\right) \\
+		=& \prod_{j=1}^mP\left(\sum_{i=n_{j-1}}^{n_j}Y_i=k_j\right) \\
+		=&\prod_{j=1}^mg(n_j-n_{j-1},k_j).
+	\end{aligned}$$
+	于是\\
+	$$E[I_{\{M(t_j)-M(t_{j-1})=k_j\}}|\mathbf{N}]=\prod_{j=1}^mg(N(t_j)-N(t_{j-1}),k_j)$$
+	独立增量性得证，只需验证$M(t)$服从参数为$p\lambda t$的Poisson分布：
+	$$\begin{aligned}
+		&P(M(t)=n) \\
+		=& E[g(N(t),n)] \\
+		=& \sum_{k=n}^\infty g(k,n)P(N(t)=k) \\
+		=&\sum_{k=n}^\infty\binom knp^nq^{k-n}\frac{\lambda^k}{k!}e^{-\lambda} \\
+		=& \frac{(p\lambda)^n}{n!}e^{-p\lambda}, n=0,1,\ldots. 
+	\end{aligned}$$
+	显然有$M(t)=N_1(t)$，同理对$N_2(t)$也成立，最后一步就要验证两过程的独立性：
+	对正整数$n$和$0=t_0\le t_1<...< t_n,0=k_0\le k_1<...< k_n,0=m_0\le m_1<...< m_n$,记$n_j=k_j+m_j,\mathbf{n}=(n_1,...,n_n)$,随机变量\\
+	$$
+	\xi_j=\sum_{i=n_{j-1}+1}^{n_j}Y_i,j=1,2,...
+	$$
+	服从二项分布，相互独立，且与$\{N(t)\}$独立，于是\\
+	$$\begin{aligned}
+		&P(N_{1}(t_{j})=k_{j},N_{2}(t_{j})=m_{j},1\leq j\leq n) \\
+		=& P(N_1(t_j)=k_j,N(t_j)=n_j,1\leq j\leq n) \\
+		=& P(N_1(t_j)-N_1(t_{j-1})=k_j-k_{j-1},N(t_j)=n_j,1\leq j\leq n) \\
+		=& P(\xi_j=k_j-k_{j-1},N(t_j)-N(t_{j-1})=n_j-n_{j-1},1\leq j\leq n) \\
+		=& P(\xi_j=k_j-k_{j-1},1\leq j\leq n) \\
+		&P(N(t_j)-N(t_{j-1})=n_j-n_{j-1},1\leq j\leq n) \\
+		=& \prod_{j=1}^{n}P(\xi_{j}=k_{j}-k_{j-1})P(N(t_{j})-N(t_{j-1})=n_{j}-n_{j-1}) \\
+		=&\prod_{j=1}^n\frac{(n_j-n_{j-1})!}{(k_j-k_{j-1})!(m_j-m_{j-1})!}p^{k_j-k_{j-1}}q^{m_j-m_{j-1}} 
+		\cdot\frac{[\lambda(t_j-t_{j-1})]^{n_j-n_{j-1}}}{(n_j-n_{j-1})!}e^{-\lambda(t_j-t_{j-1})} \\
+		=&\prod_{j=1}^n\frac{[p\lambda(t_j-t_{j-1})]^{k_j-k_{j-1}}}{(k_j-k_{j-1})!} \\
+		=&\prod_{j=1}^n\frac{[q\lambda(t_j-t_{j-1})]^{m_j-m_{j-1}}}{(m_j-m_{j-1})!}.
+	\end{aligned}$$
+	因此两过程独立.
+	\end{solution}
+\begin{note}
+	用归纳法不难推广到分解成多个相互独立的Poisson过程.
+\end{note}
+
+	\begin{problem}
+		设某个汽车站有 $A, B$ 两辆跑同一路线的长途汽车, 设到达该站的旅客数为一Poisson过程, 平均每 10 分钟到达 15 位旅客, 而每个旅客进入 $A$ 或 $B$ 的概率分别为 $\frac 2  3,\frac 1  3$. 设 $N_{A}(t)$, $N_{B}(t)$ 分别表示时段 $[0, t]$ 内进入 $A$ 或 $B$ 的旅客数, 求:\\
+		(a) $N_{A}(t), N_{B}(t)$ 的分布。\\		
+		(b) 若 $A$ 车旅客数达到 10 位即发车, $B$ 车旅客数达到 15 位即发车, 求 $A, B$ 的等待时间的分布, 并求 $A$ 比 $B$ 先开车的概率。（提示：若 $X \sim \operatorname{Gamma}(\alpha, \beta)$ 且 $\alpha$ 为正整数, 则
+		
+		$$
+		F_{X}(x)=\int_{0}^{x} f_{X}(x) d x=1-\sum_{i=0}^{\alpha-1} \frac{(\beta x)^{i}}{i !} e^{-\beta x}
+		$$
+		
+		最终的概率无需算出具体值。)
+	\end{problem}
+	
+	\begin{solution}
+		定义随机变量$X_i=\begin{cases}
+			1&\text{,第i名乘客进入A车}\\
+			0&\text{,第i名乘客进入B车}\\
+		\end{cases},Y_i=1-X_i,i=0,1,...$\\
+		（1）注意到$N_A(t)+N_B(t)\sim P(\frac 3 2 t)$,根据泊松过程分流引理，$\{N_A(t)|t\ge 0\},\{N_B(t)|t\ge 0 \}$均为泊松过程，参数分别为$\frac 2 3\times \frac 3 2 = 1, \frac 1 3\times \frac 3 2=\frac 1 2 $ ,即$N_A(t)\sim P(1),N_B(t)\sim P(0.5)$\\
+		（2）取$T_A(n),T_B(n)$为第$n$个旅客进入A，B车的时刻.则根据泊松过程相关分布的性质，$T_A(n)\sim \Gamma(n,1),T_B(n)\sim \Gamma(n,0.5)$\\
+		那么A的等待时间服从$\Gamma(10,1)$,B车的等待时间服从$\Gamma(15,0,5)$,A比B先开车的概率为
+		$$P({T_A(10)\le T_B(15)})=\int_{-\infty}^{+\infty}P({T_A(10)\le x\mid T_B(15)=x} )dP({T_B(15)=x} ) $$
+		$$ =\int_{x}^{+\infty}(1-\sum_{i=0}^{9} \frac{x^i}{i!}e^{-x}) \frac{1}{2^n\Gamma(15)}x^14e^{-\frac 1 2 x}dx$$
+		
+	\end{solution}
+	
+	
+	\begin{problem}
+		设某医院专家门诊从早上 $8: 00$ 开始就已有无数患者等候, 而每次专家只能为一名患者服务，服务的平均时间为 20 分钟，且每名患者接受服务的时间服从独立的指数分布。求从8:00到12:00门诊结束时接受过治疗的患者在医院停留的平均时间。
+	\end{problem}
+	
+	\begin{solution}
+		默认8：00为0时刻，记$T_n$表示第$n$位患者离开的时刻，$S_n$表示第$n$位患者接收服务的时长，由题意，$S_n\sim Exp(\frac 1 {20})$,注意到，$T_n=\sum_{i=1}^{n}S_i,T_n\sim \Gamma(n,\frac 1 {20} )$,患者的离开是一个Poisson过程，换言之，记$(0,t]$内离开的患者数为$N(t)$,$N(t)\sim P(\frac 1 {20})$.
+		注意到$\sum_{i=1}^{n}T_i\sim \Gamma(\frac{n(n+1)}{2},\frac 1 {20}) \Gamma E(\frac{\sum_{i=1}^{n}T_i}{n})$
+		由全期望公式和$\Gamma$分布的性质：
+		$$
+		E[
+		\frac{
+			\sum_{i=1}^{N(240)}T_i
+			}{N(240)}
+		]=
+		E[
+			E(\frac{\sum_{i=1}^{N(240)}T_i}{N(240)} )
+			|N(240)
+		]$$
+				$$ 		=\sum_{i=1}^{\infty} E( \frac{\sum_{i=1}^{N(240)}T_i}{N(240)} \mid {N(240)=n} ) P({N(240)=n})$$
+					$$ = \sum_{i=1}^{\infty}  \frac{\frac1 2 n(n+1)   \cdot20}{n} (\frac{240\cdot \frac{1}{20} }{n!} e^{-240\cdot\frac1{20}})) =\frac{130e^{12}-10}{e^{12}}$$
+	\end{solution}
+	
+	\begin{problem}
+		设每天经过某路口的车辆数为: 早上 $7: 00$ 到 $8: 00,11: 00$ 到 $12: 00$ 为平均每分钟 2 辆, 其他时间平均每分钟 1 辆。则早上 $7: 30$ 到中午 $11: 20$ 平均有多少辆汽车经过此路口? 这段时间经过此路口的车辆数超过 500 辆的概率是多少?
+		
+	\end{problem}
+	
+	\begin{solution}
+		我们默认7：00为0时刻，记$(0,t]$内路口经过的车辆数为$N(t)$,容易写出强度函数$\lambda(t)=\begin{cases}
+			2&,t\in [0,60]\\
+			1&,t\in (60,240]\\
+			2&,t\in (2400,300]
+		\end{cases}$
+		注意到$\int_{30}^{260}\lambda(t)dt= 30\times 2+180\times 1+2\times 20=280$,则$N(260)-N(30)\sim P(280)$\\
+		则早上 $7: 30$ 到中午 $11: 20$ 平均有$E[N(260)-N(30)]=280$辆车经过，超过500辆的概率为$P({N(260)-N(30)>500})=\sum_{k=501}^{+\infty}\frac{280^n}{n!}e^{-280}$\\
+	\end{solution}
+	
+	\begin{problem}
+		设 $\{N(t), t \geq 0\}$ 是强度函数为 $\lambda(t)$ 的非齐次Poisson过程, $X_{1}, X_{2}, \cdots$ 是事件之间的时间间隔，问:\\
+		(a) $X_{i}$ 之间是否相互独立?\\		
+		(b) $X_{i}$ 之间是否同分布?（提示：求 $X_{1}$ 和 $X_{2}$ 的分布）
+	\end{problem}
+		
+	\begin{solution}
+		 记$m(t)=\int_{0}^{t}\lambda(s)ds$.\\
+		 (1) $P({X_2>t|X_1=u})=P({N(t)-N(u)=0\mid X_1=s})=P({N(t)-N(u)=0})=e^{\int_{u}^{t+u}\lambda(s)ds}=e^{m(u+t)-m(u)}$与$u$有关，从而${X_i}$并不相互独立.\\
+		 (2) 注意到$P(X_1>t)=e^{-m(t)}$\\
+		 $$P(X_2>t)=\int_{0}^{\infty}P({X_2>t\mid X_1=u})dP({X_1=u})$$
+		 $$= \int_{0}^{\infty} e^{m(u+t)-m(u)} \lambda(u)e^{-m(u)}du
+		  = \int_{0}^{\infty} e^{m(u+t)} \lambda(u)du$$
+		 因此${X_i}$并不同分布.
+	\end{solution}
+	
+	\begin{problem}
+		 设 $\left\{N_{1}(t), t \geq 0\right\}$ 和 $\left\{N_{2}(t), t \geq 0\right\}$ 分别是参数为 $\lambda_{1}$ 和 $\lambda_{2}$ 的泊松过程, 且这两个过程相互独立。问: $\left\{N_{1}(t)-N_{2}(t), t \geq 0\right\}$ 是否为复合Poisson过程?
+	\end{problem}
+	
+	\begin{solution}
+		结论是肯定的，只需考察特征函数：令$X(t)=N_1(t)-N_2(t)$
+		$$\begin{aligned}
+			&\psi_{X(t)}(u)=E[e^{-iuX(t)}]=E[e^{-iuN_1(t)}]E[e^{iuN_2(t)}]\\
+			&=\sum_{n=0}^{\infty}\frac{(\lambda_1te^{-iu})^n}{n!}e^{-\lambda_1t}		\sum_{n=0}^{\infty}\frac{(\lambda_2te^{iu})^n}{n!}e^{-\lambda_2t}\\
+			&= e^{\lambda_1t(e^{-iu}-1)}  e^{\lambda_2t(e^{iu}-1)}\\
+			&=e^{(\lambda_1+\lambda_2)t\left(\frac{\lambda_1}{\lambda_1+\lambda_2}e^{-iu}+\frac{\lambda_2}{\lambda_1+\lambda_2}e^{iu}-1\right)}\\
+		\end{aligned}$$
+		由特征函数和分布唯一确定定理，$\left\{N_{1}(t)-N_{2}(t), t \geq 0\right\}$ 为复合Poisson过程.
+	\end{solution}
+	
+	
+	\begin{problem}
+		设某飞机场到达的客机数是一个Poisson过程, 平均每小时到达 10 架。客机共有三种类型, 能承载的乘客数分别为 200 人, 150 人, 100 人, 且三种飞机出现的概率为 $1 / 6,1 / 2,1 / 3$ 。令 $X$ 表示 5 小时内到达该机场的乘客数，求 $X$ 的期望和方差。
+	\end{problem}
+	
+	\begin{solution}
+		根据泊松过程分流引理，三种飞机在$(0,t]$的到达的数量$N_1(t),N_2(t),N_3(t) $均为泊松过程，换言之，$N_1(t)\sim P(\frac{10}{6}) ,N_2(t)\sim P(\frac{10}{2}),N_3(t)\sim P(\frac{10}{3}) $\\
+		$$E(X)=E[200N_1(5)+150N_2(5)+100N_3(5)]$$$$=200E[N_1(5)]+150E[N_2(5)]+100E[N_3(5)]=\frac{3350}{3}$$
+		$$D(X)=D[200N_1(5)+150N_2(5)+100N_3(5)]$$$$=200^2D[N_1(5)]+150^2D[N_2(5)]+100^2D[N_3(5)]=182500$$
+	\end{solution}
+	
+	
+\end{document}

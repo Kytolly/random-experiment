@@ -1,0 +1,170 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs}
+
+\title{\textbf{《应用随机过程》第一次作业}}% 标题名称
+\author{谢卿云 2022010910017}% 作者名称
+\date{\today}%  今日日期
+\linespread{1.5}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{题目\arabic{problemname}. }}{\end{shaded}\par}
+\newenvironment{solution}{\par\noindent\textbf{解答. }}{\par}
+\newenvironment{note}{\par\noindent\textbf{题目\arabic{problemname}的注记. }}{\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		设$\Omega$为样本空间,事件$A,B\in \Omega$,集类$\mathcal{C}=\{ A,B \}$.试写出由$\mathcal{C}$生成的$\sigma$代数,即$\sigma(\mathcal{C})$中的全部元素.
+	\end{problem}
+	
+	\begin{solution}
+		断言:\\
+		\[\sigma(\mathcal{C})=\{ \varnothing,\Omega, \{ A \} , \{B\} , \mathcal{C} ,\overline{\{A\}},\overline{\{B\}},\overline{\mathcal{C} } \}\]
+		回忆最小$\sigma$代数的性质:\\
+		1. $\Omega\in \sigma(\mathcal{C})$.\\
+		2. $\sigma(\mathcal{C})$对可数并运算封闭.\\
+		3. $\sigma(\mathcal{C})$对补运算封闭.\\
+		4. $\sigma(\mathcal{C})=\bigcap \{\mathcal{H}|\mathcal{H}\text{为包含}\mathcal{C}\text{的}\sigma \text{代数}\}$\\
+		若$\mathcal{F}$是$\mathcal{C}$所谓生成的$\sigma$代数,由性质1,2,3,显然$\mathcal{C}\subseteq \mathcal{F}$.由性质4,$\mathcal{F}\subseteq \mathcal{C}$\\
+		那么$\mathcal{C}=\mathcal{F}$.故断言为真.\\
+	\end{solution}
+	
+%	\begin{note}
+%		这里是注记. 
+%	\end{note}
+	
+	
+	\begin{problem}
+		(期望的尾和公式) 设$X$为离散型随机变量且取值为非负整数，证明：\\
+		\[ E(X)=\sum_{k=0}^{\infty} P(X>k)\]
+	\end{problem}
+	\begin{solution}
+		\[ E(X)=\sum_{k=0}^{\infty} kP(X=k)=\sum_{k=1}^{\infty}k[P(X>k-1)-P(X>k)]\]
+		\[=P(X>0)+\sum_{k=1}^{\infty}[k-(k-1)]P(X>k)=\sum_{k=0}^{\infty}P(X>k)     \].
+	\end{solution}
+	
+	
+	\begin{problem}
+		设随机变量$X$服从参数为$1/2$的指数分布.求:(1)推导$X$的特征函数$ψX(t)$;(2)利用特征函数求$E(X)$和$D(X)$. 
+	\end{problem}
+	\begin{solution}
+		\\
+		(1) $\psi_X(t)=E(e^{itX})=\int_{0}^{\infty}e^{itx}\frac{1}{2}e^{-\frac{1}{2}x}dx=\frac{1}{2it-1}e^{(it-\frac{1}{2})x}|_{0}^{\infty}=\frac{1}{1-2it}$.\\
+		(2)$E(X)=(-i)\psi'_X(0)=(-i)\frac{2i}{(1-2it)^2}|_{t=0}=2$\\
+		$E(X^2)=(-i)^2\psi''_X(0)=-(-i)^2\frac{8}{(1-2it)^3}|_{t=0}=8$\\
+		 $D(X)=E(X^2)-E(X)^2=4$.\\
+	\end{solution}
+	
+	\begin{problem}
+		设随机变量$X \sim B(n, p), Y \sim B(m, p)$，且$X$与$Y$相互独立。求:(1)推导$X$的特征函数$\psi_X(t)$;(2)$X + Y$的分布。
+	\end{problem}
+	\begin{solution}
+		\\
+		(1)$\psi_X(t)=E(e^{itX})=\sum_{k=0}^n. e^{itk}\binom{n}{k}p^k(1-p)^{n-k}=(e^{it}p+1-p)^n$.\\
+		(2)$\psi_Y(t)=(e^{it}p+1-p)^m,\psi_{X+Y}(t)=\psi_X(t)\psi_Y(t)=(e^{it}p+1-p)^{m+n}$.
+		由特征函数与分布唯一对应定理，$X+Y\sim B(m+n,p)$.
+		
+	\end{solution}
+	
+	\begin{problem}
+		设随机变量$X$服从参数为$n$的卡方分布,即$X \sim \chi^2(n)$. 已知$\psi_X(t) = (1 − 2it)^{−\frac n 2}$,
+		求:(1)利用特征函数求$E(X)$和$D(X)$;(2)利用特征函数证明卡方分布具有可加性.
+	\end{problem}
+	\begin{solution}
+		\\
+		(1)$E(X)=(-i)\psi_X'(0)=(-i)in(1-2it)^{-\frac n 2 -1}|_{t=0}=n$.\\
+		$E(X^2)=(-i)^2\psi_X''(0)=(-i)^2\cdot (-1)n(n+2)(1-2it)^{-\frac n 2 -2}|_{t=0}=n(n+2)$.\\
+		$D(X)=E(X^2)-E(x)^2=2n$.\\
+		(2)不妨设$Y\sim \chi^2(m),\psi_Y(t)=(1-2it)^{-\frac m 2}$.且$X,Y$相互独立.\\
+		$\psi_{X+Y}(t)=\psi_X(t)\psi_Y(t)=(1-2it)^{-\frac {m+n} 2}$.\\
+		根据特征函数和分布唯一对应定理，$X+Y\sim \chi^2(m+n)$.
+	\end{solution}
+	
+	
+	\begin{problem}
+		设随机变量$X \sim U[0, \pi], Y = sinX$, 利用特征函数求$Y$的概率密度$f_Y(y)$.
+	\end{problem}
+	\begin{solution}
+%			$F_Y(y)=P(Y\le y)$\\
+%			$=P(sinX\le y)=P({x|0\le x \le arcsiny or \pi-arcsiny\le x\le \pi})$\\
+%			$=\begin{cases}\frac{2arcsiny}{\pi}&,0<y<1\\0&,else \end{cases}$\\
+%			
+%			
+			断言：\\\[f_Y(y)=\frac{dF_Y(y)}{dy}=\begin{cases}
+				\frac{2}{\pi \sqrt{1-y^2}}&,0<y<1\\
+					0&,else 
+					\end{cases}\]\ \\
+			对于$E(e^{itX})=\int_{-\infty}^{+\infty}e^{ity}f_X(y)dy=\int_{0}^{\pi}e^{itx}\frac{1}{\pi}dx$\\
+			那么对于$Y=sinX$,$E(e^{itY})=\int_{0}^{\pi}e^{itsinx}\frac{1}{\pi}dx=\int_{0}^{\pi/2}e^{itsinx}\frac{2}{\pi}dx$\\
+			$=\int_{0}^{1}e^{ity}\frac{2}{\pi}darcsiny=\int_{0}^{1}e^{ity}\frac{2}{\pi \sqrt{1-y^2}}dy$\\
+			$=\int_{-\infty}^{+\infty}e^{ity}f_Y(y)dy$.断言为真.
+	\end{solution}
+%	\begin{note}
+%				暂时使用特征函数求解的办法.
+%	\end{note}
+	
+	\begin{problem}
+		已知二维随机变量$(X, Y )$的联合概率密度为
+		\[f(x, y) =\begin{cases}
+			1& |y| < x < 1\\
+			0&else
+			\end{cases}\]
+		求:(1)$f_X(x), f_Y (y)$;(2)讨论$X$与$Y$的独立性和相关性;(3)求条件数学期望
+		$E(X|Y = y)$ 和$E(Y |X = x)$.
+	\end{problem}
+	\begin{solution}
+		\\
+		(1) $f_X(x)=\int_{-\infty}^{+\infty}f(x,y)dy=\begin{cases}\int_{-x}^{x}1&,0<x<1\\
+			0&,else \end{cases}=\begin{cases}2x&,0<x<1\\0&,else \end{cases}$\\
+			$f_Y(x)=\int_{-\infty}^{+\infty}f(x,y)dx=\begin{cases}\int_{|y|}^{x}1&,-1<y<1\\
+				0&,else \end{cases}=\begin{cases}1-|y|&,-1<y<1\\
+				0&,else \end{cases}$\\
+		(2) 显然$f(x,y)\neq f_X(x)f_Y(y)$,$X,Y$不独立.\\
+		$E(X)=\int_{0}^{1}2xdx=1$\\
+		$E(Y)=\int_{-1}^{1}1-|y|dy=0$\\
+		$E(XY)=\int_{0}^{1}\int_{-x}^{x}xyf(x,y)=0$\\
+		$Cov(X,Y)=E(XY)-E(X)E(Y)=1$，$X,Y$不相关.\\
+		(3) $f_{X|Y}(X|Y=y)=\frac{f(x,y)}{f_Y(y)}=\begin{cases}\frac{1}{1-|y|}&,|y| < x < 1\\
+			0&,else \end{cases}$\\
+			$f_{Y|X}(Y|X=x)=\frac{f(x,y)}{f_X(x)}=\begin{cases}\frac{1}{2x}&,|y| < x < 1\\
+				0&,else \end{cases}$\\
+			$E(X|Y=y)=\int_{-\infty}^{+\infty}xf_{X|Y}(x|Y=y)dx=\frac{1+|y|}{2}$\\
+			$E(Y|X=x)=\int_{-\infty}^{+\infty}yf_{Y|X}(y|X=x)dy=0$\\
+			
+	\end{solution}
+	
+	\begin{problem}
+		从$1, 2, ... , n$中任取一个数记为$X$，再从$1, 2, ... ,X$中任取一个数记为$Y$，求$E(Y )$.
+	\end{problem}
+	\begin{solution}
+		注意到对$1\le x\le n$,$E(Y|X=x)=\sum_{y=1}^x \frac{1}{x}y=\frac{x+1}{2}$
+		由全期望定理,
+		$E(Y)=E[E(Y|X)]=\sum_{x=1}^{n}\frac{1}{n}\frac{x+1}{2}=\frac{n+3}{4}$.
+	\end{solution}
+	
+	\begin{problem}
+		盒中有编号为$1, 2, 3, 4, 5$的$5$个球,现从盒子中随即取出一球（假设每个球都是等可能
+		地被取到）.若取到$5$号球，则得$5$分，且停止摸球；若取到$i$号球$（i = 1, 2, 3, 4）$,则
+		得$i$分，且将此球放回,重新摸球.依次循环下去,用随机变量$X$表示得到的总分数，
+		试求$E(X)$.
+	\end{problem}
+	\begin{solution}
+		 由全期望公式,$E(X)=E[E(X|Y)]=\frac{1}{5}\cdot 5+\sum_{y=1}^{4}\frac{1}{5}(y+E(X))$,解得$E(X)=15$.
+	\end{solution}
+	
+	
+	\begin{problem}
+		设在底层乘电梯的人数服从均值为$10$的泊松分布，又设此楼共有$N + 1$层，每一个乘客
+		在每一层楼要求停下来离开是等可能的，而且与其余乘客是否在这层停下是相互独立
+		的，求在所有乘客都走出电梯之前，该电梯停止次数的期望值.
+	\end{problem}
+	\begin{solution}
+		注意到对$2\le j \le N+1$,记$Y_j=\begin{cases}1&\text{,第j层有人下}\\0&\text{,其他}$\end{cases}$\\
+		$Y=\sum_{j=2}^{N+1}Y_j,E(Y_j|X=x)=1-P({Y_j=0|X=x})=1-(1-\frac 1 N)^x$\\
+		$E(Y|X=x)=\sum_{j=2}^{N+1}E(Y_j|X=x)=N  (1-(1-\frac 1 N)^x)$\\
+		由全期望公式，$E(Y)=E[E(Y|X)]=\sum_{x=0}^{\infty}N  (1-(1-\frac 1 N)^x)\frac{10^x}{x!}e^{-10}=N(1-e^{-\frac{10}{N})$.
+		
+	\end{solution}
+\end{document}
